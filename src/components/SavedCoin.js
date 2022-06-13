@@ -10,7 +10,7 @@ const SavedCoin = () => {
       {coins.length === 0 ? (
         <p>
           You don't have any coin saved.
-          <Link to="/">Click here to search some coins to save</Link>
+          <Link to="/"> Click here to search some coins to save</Link>
         </p>
       ) : (
         <table className="w-full border-collapse texte-center">
