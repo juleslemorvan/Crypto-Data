@@ -1,13 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { UserAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
 
+  const { user, logout } = UserAuth();
+  const navigate = useNavigate();
+
   const handleNav = () => {
     setNav(!nav);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   return (
@@ -18,17 +31,26 @@ const Navbar = () => {
       <div className="hidden md:block">
         <ThemeToggle />
       </div>
-      <div>
-        <Link to="/signIn" className="p-4 hover:text-accent">
-          Sign In
-        </Link>
-        <Link
-          to="/signUp"
-          className="bg-button text-btnText px-5 py-2 ml-2 rounded-2xl shadow-lg hover:shadow-2xl"
-        >
-          Sign Up
-        </Link>
-      </div>
+      {user?.email ? (
+        <div>
+          <Link to="/account" className="p-4">
+            Account
+          </Link>
+          <button onClick={handleSignOut}>Sign Out</button>
+        </div>
+      ) : (
+        <div className="hidden md:block">
+          <Link to="/signIn" className="p-4 hover:text-accent">
+            Sign In
+          </Link>
+          <Link
+            to="/signUp"
+            className="bg-button text-btnText px-5 py-2 ml-2 rounded-2xl shadow-lg hover:shadow-2xl"
+          >
+            Sign Up
+          </Link>
+        </div>
+      )}
       {/* Menu */}
       <div onClick={handleNav} className="block md:hidden cursor-pointer z-10">
         {nav ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
@@ -42,10 +64,16 @@ const Navbar = () => {
         }
       >
         <ul className="w-full p-4 ">
-          <li className="border-b py-6 flex justify-center items-center">
+          <li
+            onClick={handleNav}
+            className="border-b py-6 flex justify-center items-center"
+          >
             <Link to="/">Home</Link>
           </li>
-          <li className="border-b py-6 flex justify-center items-center">
+          <li
+            onClick={handleNav}
+            className="border-b py-6 flex justify-center items-center"
+          >
             <Link to="/account">Account</Link>
           </li>
           <li className=" py-6">
@@ -54,12 +82,18 @@ const Navbar = () => {
         </ul>
         <div className="flex flex-col w-full p-4">
           <Link to="/signIn">
-            <button className="w-full my-2 p-3 bg-primary text-primary border border-secondary rounded-2xl shadow-xl">
+            <button
+              onClick={handleNav}
+              className="w-full my-2 p-3 bg-primary text-primary border border-secondary rounded-2xl shadow-xl"
+            >
               Sign In
             </button>
           </Link>
           <Link to="/signUp">
-            <button className="w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl">
+            <button
+              onClick={handleNav}
+              className="w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl"
+            >
               Sign Up
             </button>
           </Link>
