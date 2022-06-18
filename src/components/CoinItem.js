@@ -31,7 +31,7 @@ const CoinItem = ({ coin }) => {
   return (
     <tr className="h-[80px] border-b overflow-hidden">
       <td onClick={saveCoin}>
-        {savedCoin ? <AiFillStar /> : <AiOutlineStar />}
+        {savedCoin ? <AiFillStar color="teal" /> : <AiOutlineStar />}
       </td>
       <td>{coin.market_cap_rank}</td>
       <td>
