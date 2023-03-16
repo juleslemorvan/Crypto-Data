@@ -38,7 +38,7 @@ const Trending = () => {
                   src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
                   alt="/"
                 />
-                <p>{coin.item.price_btc.toFixed(7)}</p>
+                <p>{coin.item.price_btc}</p>
               </div>
             </div>
           </div>
